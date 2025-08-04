@@ -7,5 +7,5 @@ metadata:
       app.kubernetes.io/part-of: 'Cloud-Core'
       app.kubernetes.io/managed-by: 'saasDeployer'
 data:
-    url.health: {{ if .Values.INTERNAL_TLS_ENABLED }} https://%(ip)s:8443/health {{ else }} http://%(ip)s:8080/health {{ end }}
-    prometheus.url.metrics: {{ if .Values.INTERNAL_TLS_ENABLED }} https://%(ip)s:8443/prometheus {{ else }} http://%(ip)s:8080/prometheus {{ end }}
+    url.health: http://%(ip)s:8080/health
+    prometheus.url.metrics: http://%(ip)s:8080/prometheus

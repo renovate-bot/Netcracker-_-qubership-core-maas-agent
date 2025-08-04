@@ -59,11 +59,6 @@ spec:
                 - name: client-credentials
                   secret:
                       secretName: "{{ .Values.SERVICE_NAME }}-client-credentials"
-{{ if .Values.INTERNAL_TLS_ENABLED }}
-                - name: tls
-                  secret:
-                      secretName: '{{ .Values.SERVICE_NAME }}-tls'
-{{ end }}
 {{ if and .Values.READONLY_CONTAINER_FILE_SYSTEM_ENABLED (eq .Values.PAAS_PLATFORM "KUBERNETES") }}
                 - name: sslcerts
                   emptyDir: {}
@@ -85,17 +80,6 @@ spec:
                         value: "{{ .Values.CERTIFICATE_BUNDLE_MD5SUM }}"
                       - name: EXECUTION_MODE
                         value: "{{ .Values.EXECUTION_MODE }}"
-                      - name: INTERNAL_TLS_ENABLED
-                        value: '{{ .Values.INTERNAL_TLS_ENABLED }}'
-{{ if .Values.INTERNAL_TLS_ENABLED }}
-                      - name: CERTIFICATE_FILE_PASSWORD
-                        valueFrom:
-                          secretKeyRef:
-                            name: 'tls-password-secret'
-                            key: 'tls-password'
-                      - name: CERTIFICATE_FILE_PATH
-                        value: '/etc/tls'
-{{ end }}
                       - name: CLOUD_NAMESPACE
                         valueFrom:
                             fieldRef:
@@ -148,15 +132,15 @@ spec:
                   livenessProbe:
                       httpGet:
                           path: /health
-                          port: {{ if .Values.INTERNAL_TLS_ENABLED }} tls {{ else }} web {{ end }}
-                          scheme: {{ if .Values.INTERNAL_TLS_ENABLED }} HTTPS {{ else }} HTTP {{ end }}
+                          port: web
+                          scheme: HTTP
                       initialDelaySeconds: 180
                       timeoutSeconds: 30
                   readinessProbe:
                       httpGet:
                         path: /health
-                        port: {{ if .Values.INTERNAL_TLS_ENABLED }} tls {{ else }} web {{ end }}
-                        scheme: {{ if .Values.INTERNAL_TLS_ENABLED }} HTTPS {{ else }} HTTP {{ end }}
+                        port: web
+                        scheme: HTTP
                       initialDelaySeconds: 5
                       timeoutSeconds: 30
                   securityContext:
@@ -175,11 +159,6 @@ spec:
                       - name: client-credentials
                         mountPath: "/etc/secret"
                         readOnly: true
-{{ if .Values.INTERNAL_TLS_ENABLED }}
-                      - name: tls
-                        mountPath: '/etc/tls'
-                        readOnly: true
-{{ end }}
 {{ if and .Values.READONLY_CONTAINER_FILE_SYSTEM_ENABLED (eq .Values.PAAS_PLATFORM "KUBERNETES") }}
                       - name: sslcerts
                         mountPath: /etc/ssl/certs
