@@ -18,6 +18,5 @@ FROM ghcr.io/netcracker/qubership/core-base:1.0.0
 
 COPY --from=builder --chown=10001:0 --chmod=755 /src/maas-agent-service/app /app/maas-agent
 COPY --chown=10001:0 maas-agent-service/application.yaml /app/
-COPY --chown=10001:0 maas-agent-service/policies.conf /app/
 
 CMD ["/app/maas-agent"]
