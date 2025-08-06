@@ -25,7 +25,6 @@
       "TRACING_ENABLED": false,
       "TRACING_HOST": "nc-diagnostic-agent",
       "TRACING_SAMPLER_RATELIMITING": 10,
-      "INTERNAL_TLS_ENABLED": true,
       "PAAS_VERSION": "",
       "K8S_SERVICE_TYPE": "HEADLESS"
     }
@@ -188,16 +187,6 @@
       "title": "The SERVICE_NAME schema",
       "description": "Name of a service.",
       "internal": true
-    },
-    "INTERNAL_TLS_ENABLED": {
-      "$id": "#/properties/INTERNAL_TLS_ENABLED",
-      "$ref": "#/definitions/booleanOrString",
-      "description": "Is TLS enabled",
-      "examples": [
-        false
-      ],
-      "internal": true,
-      "title": "The INTERNAL_TLS_ENABLED schema"
     },
     "REPLICAS": {
       "$id": "#/properties/REPLICAS",
