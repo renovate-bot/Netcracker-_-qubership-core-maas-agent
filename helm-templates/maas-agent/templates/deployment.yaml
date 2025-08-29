@@ -65,9 +65,6 @@ spec:
                 - name: cacerts
                   emptyDir: {}
 {{ end }}
-                - name: "{{ .Values.SSL_SECRET }}"
-                  secret:
-                      secretName: "{{ .Values.SSL_SECRET }}"
             containers:
                 - name: "{{ .Values.SERVICE_NAME }}"
                   image: "{{ .Values.IMAGE_REPOSITORY}}:{{ .Values.TAG }}"
@@ -76,8 +73,6 @@ spec:
                         containerPort: 8080
                         protocol: TCP
                   env:
-                      - name: CERTIFICATE_BUNDLE_{{ .Values.SSL_SECRET}}_MD5SUM
-                        value: "{{ .Values.CERTIFICATE_BUNDLE_MD5SUM }}"
                       - name: EXECUTION_MODE
                         value: "{{ .Values.EXECUTION_MODE }}"
                       - name: CLOUD_NAMESPACE
@@ -165,8 +160,6 @@ spec:
                       - name: cacerts
                         mountPath: /usr/local/share/ca-certificates
 {{ end }}
-                      - name: "{{ .Values.SSL_SECRET }}"
-                        mountPath: "/tmp/cert/{{ .Values.SSL_SECRET }}"
             topologySpreadConstraints:
 {{- if .Values.CLOUD_TOPOLOGIES }}
 {{- range $v := .Values.CLOUD_TOPOLOGIES }}
