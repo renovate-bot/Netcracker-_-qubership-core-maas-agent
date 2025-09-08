@@ -17,4 +17,4 @@ Installation parameters:
 * `MAAS_AGENT_NAMESPACE_ISOLATION_ENABLED` - Optional. If false, microservice can request for topics by classifier with any namespace ignoring composite rules.
 
 As mentioned before, `maas-agent` is just a proxy to MaaS service. So, if you want to know more about REST API refer to MaaS documentation:  
-https://github.com/netcracker/qubership-core-maas/blob/main/README.md.  
+https://github.com/Netcracker/qubership-maas/blob/main/README.md.  
